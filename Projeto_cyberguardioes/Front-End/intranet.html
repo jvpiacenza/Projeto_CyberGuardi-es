@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntraNet</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <h1>CIBER GUARDIÕES S.A.</h1>
+        <img src="Protótipo do CyberGuardiões.png" alt="Logo">
+        <h2>Login</h2>
+    </header>
+    <div class="container">
+        <h1 class="titulo" id="titulo">Login</h1>
+        <label for="inp_email" class="label" id="lb_senha">Insira o email:</label>
+        <br>
+        <input type="email" class="input" id="inp_email">
+        <br>
+        <label for="inp_senha" class="label" id="lb_senha">Insira a senha:</label>
+        <br>
+        <input type="password" class="input" id="inp_senha">
+        <br>
+        <a href="#" class="a">Esqueceu sua senha</a>
+        <br>
+        <br>
+        <button class="button" id="btn_entrar">Entrar</button>
+        <br>
+        <p class="mensagem" id="p_mensagem">Esperando alguma ação</p>
+        <br>
+        <a href="cadastro.html">Não tem conta? Cadastre-se</a>
+        <br>
+        <br>
+        <a href="index.html">Voltar à página inicial</a>
+        
+    </div>
+    <script>
+        document.getElementById("btn_entrar").addEventListener("click",async()=>{
+
+            const email = document.getElementById("inp_email").value
+            const senha = document.getElementById("inp_senha").value
+
+            const resposta = await fetch(`http://localhost:3000/login_intranet`,{
+
+                method:"post",
+                headers: {
+                    "Accept":"application/json",
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                    "email":email,
+                    "senha":senha
+                })
+            })
+
+            if(resposta.ok == true){
+                const dados = await resposta.json()
+                document.getElementById("p_mensagem").innerText = dados.resposta
+            }
+        })
+    </script>
+</body>
+</html>
